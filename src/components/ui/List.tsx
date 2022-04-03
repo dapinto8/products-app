@@ -8,33 +8,21 @@ interface ListProps {
   Service: any
   method: string
   ItemComponent: React.JSXElementConstructor<any>
+  sortOptions: { label: string; value: string }[]
 }
-
-const sortOptions = [
-  {
-    label: 'Price: low to high',
-    value: 'price_asc'
-  },
-  {
-    label: 'Price: high to low',
-    value: 'price_desc'
-  }
-]
 
 const pageSizeOptions = [10, 20, 50, 100]
 
-const List = ({ Service, method, ItemComponent }: ListProps) => {
+const List = ({ Service, method, ItemComponent, sortOptions }: ListProps) => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [sort, setSort] = useState(sortOptions[0].value)
 
   const params = { search, page, pageSize, sort }
-  const { isLoading, error, data, isFetching, isPreviousData } = useQuery(
-    ['products', params],
-    () => Service[method](params),
-    { keepPreviousData: true }
-  )
+  const { isLoading, error, data } = useQuery(['products', params], () => Service[method](params), {
+    keepPreviousData: true
+  })
 
   const handlePageSize = (pageSize: number) => {
     setPageSize(pageSize)
@@ -64,6 +52,13 @@ const List = ({ Service, method, ItemComponent }: ListProps) => {
         handlePageSize={handlePageSize}
         handleSort={handleSort}
       />
+      {isLoading && (
+        <div className={styles.list}>
+          {[...Array(10).keys()].map(i => (
+            <div key={i} className={styles['loading-item']}></div>
+          ))}
+        </div>
+      )}
       {data && (
         <>
           <div className={styles.list}>
@@ -71,7 +66,9 @@ const List = ({ Service, method, ItemComponent }: ListProps) => {
               <ItemComponent key={item.id} {...item} />
             ))}
           </div>
-          <Paginator page={page} totalPages={data.totalPages} handleChangePage={handlePage} />
+          {data.totalPages > 1 && (
+            <Paginator page={page} totalPages={data.totalPages} handleChangePage={handlePage} />
+          )}
         </>
       )}
     </div>
