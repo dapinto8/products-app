@@ -13,12 +13,16 @@ const Paginator = ({ page, totalPages, handleChangePage }: PaginatorProps) => {
   const pages = [...Array(totalPages).keys()].slice(startPage, endPage)
 
   const changePage = (page: number) => {
+    let newPage = page
+    if (page < 1) newPage = 1
+    if (page > totalPages) newPage = totalPages
+    handleChangePage(newPage)
+
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth'
     })
-    handleChangePage(page)
   }
 
   return (
@@ -43,8 +47,11 @@ const Paginator = ({ page, totalPages, handleChangePage }: PaginatorProps) => {
         </button>
       ))}
       {endPage < totalPages - 1 && <span className={styles.ellipsis}>...</span>}
-      {endPage < totalPages && (
-        <button className="btn-icon" onClick={() => changePage(totalPages)}>
+      {endPage <= totalPages && (
+        <button
+          className={`btn-icon ${page === totalPages ? styles['active-page'] : ''}`}
+          onClick={() => changePage(totalPages)}
+        >
           {totalPages}
         </button>
       )}
