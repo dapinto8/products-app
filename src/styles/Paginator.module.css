@@ -1,0 +1,16 @@
+.paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.paginator button {
+  margin: 0 0.25rem;
+}
+
+.active-page, .active-page:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-color: var(--primary-color);
+}

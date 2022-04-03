@@ -1,0 +1,26 @@
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+}
+
+.filters :is(input, select) {
+  margin-right: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 480px;
+}
