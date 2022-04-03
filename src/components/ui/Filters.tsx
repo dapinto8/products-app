@@ -5,9 +5,15 @@ const Filters = ({ pageSizeOptions, sortOptions, handleSearch, handlePageSize, h
     const text = event.target.value
     if (text.length >= 3) {
       handleSearch(text)
-    } else {
-      handleSearch('')
+      return
     }
+
+    if (!!Number(text)) {
+      handleSearch(text)
+      return
+    }
+
+    handleSearch('')
   }
 
   return (
