@@ -1,6 +1,14 @@
 import { useState } from 'react'
-import { useServicesContext } from '@context/services.context'
 import { useQuery } from 'react-query'
+import Paginator from './Paginator'
+import Filters from './Filters'
+import styles from '@styles/ui/List.module.css'
+
+interface ListProps {
+  Service: any
+  method: string
+  ItemComponent: React.JSXElementConstructor<any>
+}
 
 const sortOptions = [
   {
@@ -15,8 +23,7 @@ const sortOptions = [
 
 const pageSizeOptions = [10, 20, 50, 100]
 
-function useProducts<T>() {
-  const { ProductService } = useServicesContext()
+const List = ({ Service, method, ItemComponent }: ListProps) => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -25,7 +32,7 @@ function useProducts<T>() {
   const params = { search, page, pageSize, sort }
   const { isLoading, error, data, isFetching, isPreviousData } = useQuery(
     ['products', params],
-    () => ProductService.getProducts(params),
+    () => Service[method](params),
     { keepPreviousData: true }
   )
 
@@ -48,23 +55,27 @@ function useProducts<T>() {
     setPage(page)
   }
 
-  return {
-    isLoading,
-    error,
-    data,
-    isFetching,
-    isPreviousData,
-    search,
-    page,
-    pageSize,
-    sort,
-    sortOptions,
-    pageSizeOptions,
-    handleSearch,
-    handlePage,
-    handlePageSize,
-    handleSort
-  }
+  return (
+    <div>
+      <Filters
+        sortOptions={sortOptions}
+        pageSizeOptions={pageSizeOptions}
+        handleSearch={handleSearch}
+        handlePageSize={handlePageSize}
+        handleSort={handleSort}
+      />
+      {data && (
+        <>
+          <div className={styles.list}>
+            {data.data.map(item => (
+              <ItemComponent key={item.id} {...item} />
+            ))}
+          </div>
+          <Paginator page={page} totalPages={data.totalPages} handleChangePage={handlePage} />
+        </>
+      )}
+    </div>
+  )
 }
 
-export default useProducts
+export default List

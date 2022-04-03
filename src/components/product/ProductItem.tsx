@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { castToCurrency } from 'src/lib/utils'
-import styles from '@styles/ProductItem.module.css'
+import styles from '@styles/components/ProductItem.module.css'
 
 const ProductItem = ({ name, brand, description, image, price, discount }) => {
   return (

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
-import Products from '@components/Products';
-import styles from '@styles/Home.module.css';
+import Products from '@components/product/Products';
+import styles from '@styles/components/Home.module.css';
 
 const Home: NextPage = () => {
   return (
