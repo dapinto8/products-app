@@ -17,9 +17,16 @@ const Products = () => {
   const { ProductService } = useServicesContext()
 
   return (
-    <div>
-      <h1 className="title">Products</h1>
-      <List Service={ProductService} method="getProducts" ItemComponent={ProductItem} sortOptions={sortOptions} />
+    <div data-test="products">
+      <h1 data-test="products-title" className="title">
+        Products
+      </h1>
+      <List
+        Service={ProductService}
+        method="getProducts"
+        ItemComponent={ProductItem}
+        sortOptions={sortOptions}
+      />
     </div>
   )
 }

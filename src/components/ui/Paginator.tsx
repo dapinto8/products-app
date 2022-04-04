@@ -26,8 +26,8 @@ const Paginator = ({ page, totalPages, handleChangePage }: PaginatorProps) => {
   }
 
   return (
-    <div className={styles.paginator}>
-      <button className="btn-icon" onClick={() => changePage(page - 1)}>
+    <div data-test="paginator" className={styles.paginator}>
+      <button data-test="paginator-prev-page" className="btn-icon" onClick={() => changePage(page - 1)}>
         <Image src="/arrow-left.png" alt="arrow left" width={16} height={16} />
       </button>
       {startPage > 1 && (
@@ -39,6 +39,7 @@ const Paginator = ({ page, totalPages, handleChangePage }: PaginatorProps) => {
       {pages.map(pageNumber => (
         <button
           key={pageNumber}
+          data-test="paginator-page-number"
           className={`btn-icon ${pageNumber === page && styles['active-page']}`}
           onClick={() => changePage(pageNumber)}
           disabled={pageNumber === page}
@@ -55,7 +56,7 @@ const Paginator = ({ page, totalPages, handleChangePage }: PaginatorProps) => {
           {totalPages}
         </button>
       )}
-      <button className="btn-icon" onClick={() => changePage(page + 1)}>
+      <button data-test="paginator-next-page" className="btn-icon" onClick={() => changePage(page + 1)}>
         <Image src="/arrow-right.png" alt="arrow left" width={16} height={16} />
       </button>
     </div>

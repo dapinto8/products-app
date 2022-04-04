@@ -17,6 +17,7 @@
     "incremental": true,
     "noImplicitAny": false,
     "downlevelIteration": true,
+    "types": ["cypress"],
     "paths": {
       "@components/*": ["./src/components/*"],
       "@context/*": ["./src/context/*"],
