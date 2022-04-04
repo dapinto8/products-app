@@ -69,20 +69,6 @@ describe('Test products page', () => {
       .and('be.visible')
   })
 
-  it('should check search products with palindrome', () => {
-    cy.get('[data-test=filters-search-input]').type('adda')
-
-    cy.get('[data-test=product-item]')
-      .should('exist')
-      .and('be.visible')
-    cy.get('[data-test=product-item-discount]')
-      .should('exist')
-      .and('be.visible')
-    cy.get('[data-test=product-item-discount-price]')
-      .should('exist')
-      .and('be.visible')
-  })
-
   it('should check change page size', () => {
     cy.get('[data-test=product-item]').should('have.length', 10)
     cy.get('[data-test=filters-page-size-selector]').select('20')
